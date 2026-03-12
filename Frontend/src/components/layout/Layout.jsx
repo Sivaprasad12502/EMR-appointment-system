@@ -38,6 +38,7 @@ const Layout = ({ children }) => {
           icon: <FaCalendarAlt />,
         },
         { path: "/patients", label: "Patients", icon: <FaUserInjured /> },
+        {  path: "/appointments/new", label: "Book Appointment", icon: <FaCalendarAlt /> },
       ];
     } else if (user?.role === "receptionist") {
       return [

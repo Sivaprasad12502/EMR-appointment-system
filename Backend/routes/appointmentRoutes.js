@@ -24,7 +24,7 @@ appointmentRouter.get("/:id", protect, getAppointmentById);
 appointmentRouter.post(
   "/",
   protect,
-  authorizeRoles("receptionist", "patient"),
+  authorizeRoles("receptionist", "patient",'super_admin'),
   bookAppointment,
 );
 

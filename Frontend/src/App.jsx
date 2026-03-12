@@ -62,7 +62,7 @@ function App() {
         <Route
           path="/appointments/new"
           element={
-            <ProtectedRoute allowedRoles={["receptionist", "patient"]}>
+            <ProtectedRoute allowedRoles={["receptionist", "patient","super_admin"]}>
               <AppointmentBooking />
             </ProtectedRoute>
           }

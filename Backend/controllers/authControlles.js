@@ -8,6 +8,7 @@ const {
 } = require("../utils/generateToken");
 const { createAuditLog } = require("../utils/auditLogger");
 const { isValidEmail, isStrongPassword } = require("../utils/validator");
+const mongoose = require("mongoose")
 
 exports.registerPatient = async (req, res) => {
   try {
@@ -123,7 +124,7 @@ exports.login = async (req, res) => {
       password === process.env.SUPER_ADMIN_PASSWORD
     ) {
       const user = {
-        id: "superadmin",
+        id: new mongoose.Types.ObjectId(), //Dummy ID for super admin,
         role: "super_admin",
         name: process.env.SUPER_ADMIN_NAME || "Super Admin",
         email: process.env.SUPER_ADMIN_EMAIL,

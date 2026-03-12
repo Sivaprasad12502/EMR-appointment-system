@@ -105,7 +105,7 @@ exports.bookAppointment = async (req, res) => {
     } else {
       return res.status(400).json({
         success: false,
-        message: "Patient information is required for receptionists",
+        message: "Patient information is required (provide patientId or patientData)",
       });
     }
 
