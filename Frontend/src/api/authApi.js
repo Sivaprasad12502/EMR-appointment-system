@@ -9,12 +9,19 @@ export const loginUserApi = async (data) => {
   const res = await axiosClient.post("/auth/login", data);
   return res.data;
 };
+export const logoutApi=async()=>{
+  const res=await axiosClient.post("/auth/logout",{},{
+    withCredentials:true
+  })
+  return res.data
+}
 
 export const refrshTokenApi = async () => {
-  const refresh = localStorage.getItem("refreshToken");
-  const res = await axiosClient.post("/auth/refresh-token", {
-    refreshToken: refresh,
-  });
+  const res = await axiosClient.post(
+    "/auth/refresh-token",
+    {},
+    { withCredentials: true },
+  );
   return res.data;
 };
 

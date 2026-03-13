@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Context } from "../context/UseContex";
 import { useMutation } from "@tanstack/react-query";
-import { loginUserApi, registerUserApi } from "../api/authApi";
+import { loginUserApi, logoutApi, registerUserApi } from "../api/authApi";
 
 export const useRegisterUser = (navigate, next) => {
   const { storeData } = useContext(Context);
@@ -25,25 +25,24 @@ export const useLoginUser = (navigate, next) => {
       storeData({
         user: data?.user,
         token: data?.accessToken,
-        refresh: data?.refreshToken,
       });
-      const role = data?.user?.role;
-
-      
-      if (role === "super_admin") {
-        navigate("/dashboard");
-      } else if (role === "doctor") {
-        navigate("/dashboard");
-      } else if (role === "receptionist") {
-        navigate("/dashboard");
-      } else if (role === "patient") {
-        navigate("/dashboard");
-      } else {
-        navigate("/login");
-      }
+      navigate(next);
     },
     onError: (error) => {
       console.log(error.response.data);
     },
   });
 };
+export const useLogoutUser=()=>{
+  return useMutation({
+    mutationFn:logoutApi,
+    onSuccess:()=>{
+      localStorage.clear()
+      console.log("logged out successfully")
+
+    },
+    onError:(error)=>{
+      console.log(error.response.data)
+    }
+  })
+}

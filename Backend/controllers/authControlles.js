@@ -84,11 +84,16 @@ exports.registerPatient = async (req, res) => {
       details: { email, role: "patient" },
       req,
     });
+    res.cookie("refreshToken",refreshToken,{
+      httpOnly:true,
+      secure:process.env.NODE_ENV==="production",
+      sameSite:"strict",
+      maxAge:7*24*60*60*1000,
+    })
 
     res.status(201).json({
       success: true,
       message: "Patient registered successfully",
-      accessToken,
       refreshToken,
       user: {
         id: user._id,
@@ -141,11 +146,17 @@ exports.login = async (req, res) => {
         details: { email },
         req,
       });
+      res.cookie("refreshToken",refreshToken,{
+        httpOnly:true,
+        secure:process.env.NODE_ENV==="production",
+        sameSite:"strict",
+        maxAge:7*24*60*60*1000
+      })
 
       return res.json({
         success: true,
         accessToken,
-        refreshToken,
+        
         user,
       });
     }
@@ -228,7 +239,7 @@ exports.login = async (req, res) => {
 };
 
 exports.refreshToken = async (req, res) => {
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.cookies.refreshToken;
 
   if (!refreshToken) {
     return res.status(401).json({
@@ -260,7 +271,17 @@ exports.refreshToken = async (req, res) => {
       message: "Invalid refresh token",
     });
   }
+
 };
+
+exports.logout=async (req,res) => {
+  res.clearCookie("refreshToken")
+  res.json({
+    success:true,
+    message:"Logged out successfully"
+  })
+  
+}
 
 exports.getMe = async (req, res) => {
   try {

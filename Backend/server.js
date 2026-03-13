@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser=require('cookie-parser')
 const dotenv = require('dotenv');
 const connectDB = require('./confiq/db');
 const { errorHandler, notFound } = require('./middlewares/errorHandler');
@@ -20,6 +21,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 // Request logging middleware (simple)
 app.use((req, res, next) => {

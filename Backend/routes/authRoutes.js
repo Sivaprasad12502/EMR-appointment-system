@@ -5,11 +5,13 @@ const {
   login,
   refreshToken,
   getMe,
+  logout,
 } = require("../controllers/authControlles");
 const protect = require("../middlewares/autMiddleware");
 
 authRouter.post("/register", registerPatient);
 authRouter.post("/login", login);
+authRouter.post("/logout",protect, logout);
 authRouter.post("/refresh-token", refreshToken);
 
 authRouter.get("/me", protect, getMe);

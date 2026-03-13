@@ -4,7 +4,7 @@ import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import useForm from "../../hooks/UseForm";
 import { useLoginUser } from "../../hooks/useAuth";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams,  } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +12,10 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const loginMutation = useLoginUser(navigate);
+
+  const [searchParams]=useSearchParams()
+  const next=searchParams.get('next')||"/dashboard"
+  const loginMutation = useLoginUser(navigate,next);
 
   const handleSubmit = (e) => {
     e.preventDefault();
