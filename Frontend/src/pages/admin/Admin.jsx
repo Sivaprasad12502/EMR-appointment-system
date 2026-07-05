@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UseForm from "../../hooks/UseForm";
 import Layout from "../../components/layout/Layout";
+import { toast } from "react-toastify";
 
 import { FaPlus, FaEdit, FaTrash, FaSave, FaUserMd } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
@@ -162,8 +163,11 @@ const Admin = () => {
       } else {
         setError("Failed to save. Please try again.");
       }
+      toast.error(err.response?.data?.message || "Failed to save. Please try again.")
     }
   };
+
+  console.log("error form admin page" , error)
 
   const handleDelete = async (id, type) => {
     if (!confirm(`Are you sure you want to delete this ${type}?`)) return;

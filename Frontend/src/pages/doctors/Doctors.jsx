@@ -20,6 +20,9 @@ const Doctors = () => {
   useEffect(() => {
     fetchDoctors();
   }, []);
+  useEffect(() => {
+  console.log("Schedule modal state changed:", showScheduleModal);
+}, [showScheduleModal]);
 
   const fetchDoctors = async () => {
     try {
@@ -39,7 +42,9 @@ const Doctors = () => {
       setSelectedDoctor(doctor);
       const response = await getDoctorSchedule(doctor._id);
       setSchedule(response.schedule);
+      console.log("opening modal")
       setShowScheduleModal(true);
+      console.log('Schedule modal state:', showScheduleModal)
     } catch (error) {
       console.error("Error fetching schedule:", error);
       alert("Failed to fetch doctor schedule");
@@ -221,6 +226,7 @@ const Doctors = () => {
             }}
             title={`Dr. ${selectedDoctor?.user?.name}'s Schedule`}
           >
+            
             {schedule ? (
               <div className="space-y-4">
                 <div>

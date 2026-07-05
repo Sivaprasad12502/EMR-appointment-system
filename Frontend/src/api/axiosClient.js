@@ -48,7 +48,7 @@ axiosClient.interceptors.response.use(
       isRefreshing = true;
       try {
         const res = await refrshTokenApi();
-        const token = res.data.accessToken;
+        const token = res.accessToken
         if (!token) {
           throw new Error("no access token is returned from refresh");
         }

@@ -11,26 +11,31 @@ const Modal = ({ isOpen, onClose, title, children, size = "md" }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        <div
-          className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
-          onClick={onClose}
-        />
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4">
+      <div
+        className={`relative w-full ${sizes[size]} bg-white rounded-lg shadow-2xl`}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between border-b px-6 py-4">
+          <h3 className="text-lg font-semibold">{title}</h3>
 
-        <div
-          className={`inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle ${sizes[size]} w-full`}
-        >
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            {title && (
-              <div className="mb-4 pb-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-              </div>
-            )}
-            {children}
-          </div>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-black text-xl"
+          >
+            ✕
+          </button>
         </div>
+
+        {/* Body */}
+        <div className="p-6">{children}</div>
       </div>
+
+      {/* Click outside */}
+      <div
+        className="fixed inset-0 -z-10"
+        onClick={onClose}
+      />
     </div>
   );
 };

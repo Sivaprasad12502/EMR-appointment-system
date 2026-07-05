@@ -1,10 +1,11 @@
 import React from "react";
 import { FaUserMd } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import { MdEmail,MdRemoveRedEye } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import useForm from "../../hooks/UseForm";
 import { useLoginUser } from "../../hooks/useAuth";
 import { useNavigate, Link, useSearchParams,  } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false)
 
   const [searchParams]=useSearchParams()
   const next=searchParams.get('next')||"/dashboard"
@@ -87,7 +89,7 @@ const Login = () => {
                 <RiLockPasswordFill className="h-5 w-5 text-gray-400" />
               </div>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={values.password}
                 onChange={handleChange}
@@ -95,6 +97,16 @@ const Login = () => {
                 placeholder="Enter your password"
                 className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
               />
+              <div
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <MdRemoveRedEye className="h-5 w-5 text-gray-400" />
+                ) : (
+                  <RiLockPasswordFill className="h-5 w-5 text-gray-400" />
+                )}
+              </div>
             </div>
           </div>
 

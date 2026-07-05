@@ -8,7 +8,7 @@ const {
 } = require("../utils/generateToken");
 const { createAuditLog } = require("../utils/auditLogger");
 const { isValidEmail, isStrongPassword } = require("../utils/validator");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 exports.registerPatient = async (req, res) => {
   try {
@@ -84,12 +84,12 @@ exports.registerPatient = async (req, res) => {
       details: { email, role: "patient" },
       req,
     });
-    res.cookie("refreshToken",refreshToken,{
-      httpOnly:true,
-      secure:process.env.NODE_ENV==="production",
-      sameSite:"strict",
-      maxAge:7*24*60*60*1000,
-    })
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
       success: true,
@@ -146,17 +146,17 @@ exports.login = async (req, res) => {
         details: { email },
         req,
       });
-      res.cookie("refreshToken",refreshToken,{
-        httpOnly:true,
-        secure:process.env.NODE_ENV==="production",
-        sameSite:"strict",
-        maxAge:7*24*60*60*1000
-      })
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
 
       return res.json({
         success: true,
         accessToken,
-        
+
         user,
       });
     }
@@ -216,7 +216,12 @@ exports.login = async (req, res) => {
       details: { email },
       req,
     });
-
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
     res.json({
       success: true,
       accessToken,
@@ -239,7 +244,7 @@ exports.login = async (req, res) => {
 };
 
 exports.refreshToken = async (req, res) => {
-  const { refreshToken } = req.cookies.refreshToken;
+  const refreshToken = req.cookies.refreshToken;
 
   if (!refreshToken) {
     return res.status(401).json({
@@ -271,17 +276,15 @@ exports.refreshToken = async (req, res) => {
       message: "Invalid refresh token",
     });
   }
-
 };
 
-exports.logout=async (req,res) => {
-  res.clearCookie("refreshToken")
+exports.logout = async (req, res) => {
+  res.clearCookie("refreshToken");
   res.json({
-    success:true,
-    message:"Logged out successfully"
-  })
-  
-}
+    success: true,
+    message: "Logged out successfully",
+  });
+};
 
 exports.getMe = async (req, res) => {
   try {
